@@ -19,7 +19,7 @@ jobs:
       - name: Install packages & setup
         run: |
           sudo apt update -y
-          sudo apt install libncurses5-dev lld -y
+          sudo apt-get update --fix-missing && sudo apt-get install bc bison build-essential zstd clang flex gnupg gperf ccache liblz4-tool libsdl1.2-dev libstdc++6 libxml2 libxml2-utils lzop pngcrush schedtool xsltproc zlib1g-dev libncurses5-dev python3 bzip2 gcc g++ libssl-dev openssl -y && sudo apt-get install gcc-aarch64-linux-gnu -y && sudo apt-get install gcc-arm-linux-gnueabihf -y && sudo apt-get install lld gcc-arm-linux-gnueabi llvm python-is-python3 device-tree-compiler cpio -y
           wget http://security.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2ubuntu0.1_amd64.deb && sudo dpkg -i libtinfo5_6.3-2ubuntu0.1_amd64.deb
           
       - name: Set environment variable
