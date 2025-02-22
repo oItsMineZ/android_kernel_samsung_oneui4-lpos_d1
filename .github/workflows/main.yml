@@ -23,7 +23,7 @@ jobs:
       - name: Install packages & setup
         run: |
           sudo apt update -y
-          sudo apt-get update --fix-missing && sudo apt-get install bc bison build-essential zstd clang flex gnupg gperf ccache liblz4-tool libsdl1.2-dev libstdc++6 libxml2 libxml2-utils lzop pngcrush schedtool squashfs-tools xsltproc zlib1g-dev libncurses5-dev python3 bzip2 git gcc g++ libssl-dev openssl -y && sudo apt-get install gcc-aarch64-linux-gnu -y && sudo apt-get install gcc-arm-linux-gnueabihf -y && sudo apt-get install lld gcc-arm-linux-gnueabi llvm python-is-python3 device-tree-compiler cpio lld -y
+          sudo apt-get update --fix-missing && sudo apt-get install bc bison build-essential libncurses5-dev python3 -y && sudo apt-get install lld -y
           bash init_clang_13.sh
           
       - name: Set environment variable
