@@ -24,7 +24,6 @@ jobs:
         run: |
           sudo apt update -y
           sudo apt-get update --fix-missing && sudo apt-get install bc bison build-essential libncurses5-dev python3 -y
-          d -y
           bash init_clang_13.sh
           
       - name: Set environment variable
