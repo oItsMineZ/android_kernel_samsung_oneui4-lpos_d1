@@ -23,7 +23,7 @@ jobs:
       - name: Install packages & setup
         run: |
           sudo apt update -y
-          sudo apt-get update --fix-missing && sudo apt-get install bc bison build-essential libncurses5-dev python3 -y && sudo apt-get install ld-linux
+          sudo apt-get update --fix-missing && sudo apt-get install bc bison build-essential libncurses5-dev python3 -y
           d -y
           bash init_clang_13.sh
           
