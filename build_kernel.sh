@@ -23,13 +23,11 @@ mkdir out || true
 
 #exporting variables
 export current_datetime=$(date +"%Y-%m-%d_%H-%M-%S")
-#export LPOS_KERNEL_VERSION="v8.6.2-stable"
 export DEVICE="Note 10"
-export KBUILD_BUILD_USER="@ravindu644"
 export LLVM=1
 export ARCH=arm64
-export PLATFORM_VERSION=12
-export ANDROID_MAJOR_VERSION=s
+export PLATFORM_VERSION=11
+export ANDROID_MAJOR_VERSION=r
 
 export ARGS="
 CC=clang
@@ -149,12 +147,6 @@ clean_build() {
     make ${ARGS} clean && make ${ARGS} mrproper
     lpos_defaults
 
-    #patching allowlist for non-gki
-    if [ ! -f ".allowlist_patched" ]; then
-        patch -p1 < "$work_dir/ksu.patch"
-        echo "1" > ".allowlist_patched"
-    fi
-
     make ${ARGS} "$exynos_defconfig"
     make ${ARGS} -j"$(nproc)" || exit
     dtb_img
@@ -195,25 +187,6 @@ build_ksu(){
         echo -e "\n\n[+] Compiling KernelSU + Enforcing..\n\n"
         make ${ARGS} "$exynos_defconfig"
         make ${ARGS} -j"$(nproc)" || exit 1
-        dtb_img
-        mv "$work_dir/arch/arm64/boot/Image" "$dt_tool/AIK/split_img/boot.img-kernel"
-        checks_ksu
-    }
-
-    #ksu + Permissive
-    ksu_permissive(){  
-        cd "$work_dir"      
-        replace_config_option_ksu "CONFIG_KSU" "y"
-        replace_config_option_ksu "CONFIG_SECURITY_SELINUX_ALWAYS_PERMISSIVE" "y"
-        export SELINUX_STATUS="Permissive"        
-    }
-
-    #building with ksu + permissive
-    build_permissive() {
-        cd "$work_dir"
-        echo -e "\n\n[+] Compiling KernelSU + Permissive..\n\n"
-        make ${ARGS} "$exynos_defconfig"
-        make ${ARGS} -j"$(nproc)"
         dtb_img
         mv "$work_dir/arch/arm64/boot/Image" "$dt_tool/AIK/split_img/boot.img-kernel"
         checks_ksu
@@ -283,10 +256,6 @@ build_ksu(){
         ksu_enforce
         ksu_core
         build_enforce
-        #compiling permissive
-        ksu_permissive
-        ksu_core
-        build_permissive
         #packing all
         tar_xz_ksu
         deep_clean

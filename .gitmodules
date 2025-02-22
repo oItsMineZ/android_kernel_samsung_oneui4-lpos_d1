@@ -1,0 +1,4 @@
+[submodule "KernelSU-Next"]
+	path = KernelSU-Next
+	url = https://github.com/oItsMineZ/KernelSU-Next
+	branch = susfs-v1.5.5
